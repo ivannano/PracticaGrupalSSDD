@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import es.codeurjc.PracticaGrupalSSDD_1.moduloGestionEstacionesBicicletas.Station;
-import es.codeurjc.PracticaGrupalSSDD_1.moduloGestionEstacionesBicicletas.StationRepository;
+import es.codeurjc.Estaciones.Station;
+import es.codeurjc.Estaciones.StationRepository;
 
 
 

@@ -1,4 +1,4 @@
-package es.codeurjc.PracticaGrupalSSDD_1.moduloGestionEstacionesBicicletas;
+package es.codeurjc.Estaciones;
 
 import java.time.LocalDateTime;
 
