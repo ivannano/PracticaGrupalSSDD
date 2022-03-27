@@ -1,4 +1,4 @@
-package es.codeurjc.Estaciones;
+package es.codeurjc.PracticaGrupalSSDD_1.Estaciones;
 
 import java.time.LocalDateTime;
 
