@@ -1,0 +1,104 @@
+html,body{
+	padding: 0;
+	margin: 0;
+	background-image: url("http://www.solofondos.com/wp-content/uploads/2017/08/207fb729e27a3633c26561a8463233f6.jpg");
+	height: 100%;
+	background-repeat: none;
+	background-size:cover;
+	
+}
+
+
+h2{
+	margin: 0;
+	padding:2em;
+}
+/*
+ID CON #
+CLASS CON .
+*/
+
+/*Estilizacion del NAV*/
+
+
+.div-nav-main{
+	/*background-color:blue;*/
+	padding:1em;
+	overflow:hidden;
+}
+
+.item-nav{
+	margin: 1em;
+	padding: 1em;
+	color:#ffffff;
+	float:left;
+}
+
+
+
+#logo{
+	width: 30%;
+}
+
+#item2{
+	/*background-color:chartreuse;*/
+	transform:translateX(50%) translateY(110%);
+}
+#item2 ul{
+	display:flex;
+	margin:0;
+	padding:0;
+	list-style: none;
+}
+
+#item2 ul li{
+	float:left;
+	
+}
+
+
+#item2 ul li a{
+	
+	border:0 transparent;
+	text-decoration:none;
+	display:inline-block;
+	padding: 0 2em;
+}
+
+#item2 a:hover{
+	
+	border-bottom:  solid #fff;
+}	
+
+hr{
+	border: none; 
+	height: 5px; 
+	background-color: rgb(255, 255, 255); 
+	border-radius: 5px;
+	width: 90%;
+	transform: translateY(-600%);
+}
+
+.showcase{
+	width: 100%;
+	height: 550px;
+  	background: url("https://upload.wikimedia.org/wikipedia/commons/a/a6/URJC_Mostoles_DepartamentalI.jpg") no-repeat center center/cover;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	text-align: center;
+  	justify-content: flex-end;
+  	padding-bottom: 50px;
+  	margin-bottom: 20px;
+  	color: #fff;
+}
+
+.showcase h2,
+.showcase p {
+  margin-bottom: 10px;
+}
+
+.showcase .btn {
+  margin-top: 20px;
+}
+
