@@ -10,7 +10,7 @@ public class Usuarios {
 		this.usuarios = new ArrayList<>();
 	}
 	
-	public boolean newUser(String id, String nombre, String contraseña, Graphics foto) {
+	public boolean newUser(Long id, String nombre, String contraseña, Graphics foto) {
 		User user = new User(id, nombre, contraseña, foto);
 		if(!exist(user)) {
 			usuarios.add(user);
