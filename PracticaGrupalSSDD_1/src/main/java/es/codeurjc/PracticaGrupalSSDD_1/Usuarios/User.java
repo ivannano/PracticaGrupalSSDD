@@ -3,15 +3,15 @@ package es.codeurjc.PracticaGrupalSSDD_1.Usuarios;
 import java.awt.Graphics;
 import java.time.LocalDate;
 
-public class Usuario {
-	private String id;
+public class User {
+	private Long id;
 	private String password;
 	private String name;
 	private Graphics picture;
 	private LocalDate date;
 	private boolean active;
 	
-	public Usuario(String id, String nombre, String contraseña, Graphics foto) {
+	public User(Long id, String nombre, String contraseña, Graphics foto) {
 		this.id = id;
 		this.password = contraseña;
 		this.name = nombre;
@@ -20,7 +20,7 @@ public class Usuario {
 		this.active = true;
 	}
 	
-	public String getId() {
+	public Long getId() {
 		return this.id;
 	}
 	
@@ -63,8 +63,8 @@ public class Usuario {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof Usuario) {
-			Usuario user = (Usuario) obj;
+		if(obj instanceof User) {
+			User user = (User) obj;
 			if(this.getId().equals(user.getId())) {
 				return true;
 			}
