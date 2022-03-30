@@ -1,21 +1,27 @@
 package es.codeurjc.PracticaGrupalSSDD_1.Usuarios;
 
-import java.awt.Graphics;
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class User {
+	@Id
 	private Long id;
 	private String password;
 	private String name;
-	private Graphics picture;
 	private LocalDate date;
 	private boolean active;
 	
-	public User(Long id, String nombre, String contraseña, Graphics foto) {
+	public User() {
+		
+	}
+	
+	public User(Long id, String nombre, String contraseña) {
 		this.id = id;
 		this.password = contraseña;
 		this.name = nombre;
-		this.picture = foto;
 		this.date = LocalDate.now();
 		this.active = true;
 	}
@@ -32,10 +38,6 @@ public class User {
 		return this.name;
 	}
 	
-	public Graphics getImage() {
-		return this.picture;
-	}
-	
 	public LocalDate getDate() {
 		return this.date;
 	}
@@ -50,10 +52,6 @@ public class User {
 	
 	public void setPassword(String newPassword) {
 		this.password = newPassword;
-	}
-	
-	public void setPicture(Graphics newPicture) {
-		this.picture = newPicture;
 	}
 	
 	public void setActive(boolean newActive) {

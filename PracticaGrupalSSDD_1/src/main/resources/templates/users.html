@@ -1,0 +1,21 @@
+{{>header}}
+	<p><h2>Lista de Usuarios</h2></p>
+	<table>
+		<thead>
+			<tr>
+				<th>Identificador</th>
+				<th>Nombre</th>
+				<th>Estado</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#User}}
+			<tr>
+				<td>{{id}}</td>
+				<td>{{name}}</td>
+				<td>{{state}}</td>
+			</tr>
+			{{/User}}
+		</tbody>
+	</table>
+{{>footer}}

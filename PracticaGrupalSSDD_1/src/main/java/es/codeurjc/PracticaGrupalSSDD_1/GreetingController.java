@@ -12,4 +12,9 @@ public class GreetingController {
 		model.addAttribute("name", "BiciURJC");
 		return "greeting_template";
 	}
+	
+	@GetMapping("/users")
+	public String users(Model model) {
+		return "users";
+	}
 }
