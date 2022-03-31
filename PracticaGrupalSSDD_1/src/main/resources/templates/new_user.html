@@ -1,0 +1,21 @@
+{{>header}}
+	<p><h2>Registrar nuevo usuario</h2></p>
+
+	<article class="articulo">
+		<h3>Introducir datos:</h3>
+		<form class="formulario" action="/processUser" method="post">
+			<label for="id">ID:</label>
+			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br> 
+			<input type="text" id="id" name="id"><br> 
+			
+			<label for="name">Nombre:</label>
+			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br>
+			<input type="text" id="name" name="name"><br>
+			
+			<label for="password">Contrasena:</label>
+			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br>
+			<input type="text" id="password" name="password"><br>
+			<input type="submit">
+		</form>
+	</article>
+{{>footer}}

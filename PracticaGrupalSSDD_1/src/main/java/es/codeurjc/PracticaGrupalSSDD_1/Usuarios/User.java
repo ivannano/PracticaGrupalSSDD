@@ -46,6 +46,10 @@ public class User {
 		return this.active;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public void setName(String newName) {
 		this.name = newName;
 	}
