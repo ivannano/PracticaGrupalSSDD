@@ -1,8 +1,13 @@
 package es.codeurjc.PracticaGrupalSSDD_1;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import es.codeurjc.PracticaGrupalSSDD_1.Usuarios.User;
+import es.codeurjc.PracticaGrupalSSDD_1.Usuarios.UserService;
 
 @Controller
 public class GreetingController {
@@ -13,8 +18,4 @@ public class GreetingController {
 		return "greeting_template";
 	}
 	
-	@GetMapping("/users")
-	public String users(Model model) {
-		return "users";
-	}
 }
