@@ -2,8 +2,18 @@ package es.codeurjc.PracticaGrupalSSDD_1.Bicicletas;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Bicycle {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long Id = null;
+	
 	private String n_serie;
 	private String modelo;
 	private LocalDate f_alta;
