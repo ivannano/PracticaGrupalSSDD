@@ -1,44 +1,43 @@
 {{>header}}
-	<div class="div-nav-main">
-			<!--Logo de la app-->
-		<nav>
-			<div class ="item-nav" id="item1">
-				<a href="https://urjc.es">
-					<img SRC="https://upload.wikimedia.org/wikipedia/commons/d/db/Logo_URJC.svg" id="logo">
-				</a>
-				
-			</div>
-
-			
-			<!--Lista de Modulos de la app-->
-			<div class ="item-nav" id="item2">
-				
-					<ul>
-					<li>
-						<a href="/user_index">
-							Modulo Gestion Usuarios
-						</a>
-					</li>
-					<li>
-						<a>Modulo Gestion Estaciones Bicicletas</a>
-					</li>
-					<li>
-						<a>Modulo Gestion Bicicletas y ciclo de vida</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
+	<div class="contenedor">
+		<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-indicators">
+		    	<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		    	<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		    	<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		  	</div>
+		  	<div class="carousel-inner">
+		    <div class="carousel-item active">
+		      	<img src="/images/urjc.jpg" class="d-block w-100" alt="...">
+		      	<div class="carousel-caption d-none d-md-block">
+		        	<h5>TITULO 1</h5>
+		        	<p>Poner algo descriptivo de la foto o cualquier cosa</p>
+		      	</div>
+		    </div>
+		    <div class="carousel-item">
+		      	<img src="/images/urjc2.jpg" class="d-block w-100" alt="...">
+		      	<div class="carousel-caption d-none d-md-block">
+		        	<h5>TITULO 2</h5>
+		        	<p>Poner algo descriptivo de la foto o cualquier cosa</p>
+		      	</div>
+		    </div>
+		    <div class="carousel-item">
+		      	<img src="/images/urjc-campus.jpg" class="d-block w-100" alt="...">
+		      	<div class="carousel-caption d-none d-md-block">
+		        	<h5>TITULO 3</h5>
+		        	<p>Poner algo descriptivo de la foto o cualquier cosa</p>
+		      	</div>
+		    </div>
+		  </div>
+		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+		    	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    	<span class="visually-hidden">Previous</span>
+		  </button>
+		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+		    	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    	<span class="visually-hidden">Next</span>
+		  </button>
+		</div>
 	</div>
-	
-	<!--Barra que separa el nav-->
-	<hr>
-	
-	<header class="showcase">
-        <h2>Cosas de la UNI</h2>
-      	<p>Descripcion de lo que se quiere poner</p>
-       	<a href="https://www.urjc.es/etsii" class="btn"  target="_blank">
-        	Mostar más <i class="fas fa-chevron-right"></i>
-    	</a>
-	</header>
 	
 {{>footer}}

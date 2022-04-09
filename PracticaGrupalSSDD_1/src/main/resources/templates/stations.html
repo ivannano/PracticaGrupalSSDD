@@ -1,0 +1,64 @@
+{{>header}}
+	<div="container">
+		<div class="moduloGestion">
+		<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+  			<path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+		</svg>
+		<h1>Gestion Estaciones</h1>
+		
+		</div>
+
+	<div class="botones">
+		<div class="ListaEstaciones">
+			<h3>Listado de estaciones</h3>
+		</div>
+		
+		<div>
+  			<button type="button" class="btn btn-danger">Añadir Estacion</button>
+  			<!--<button type="button" class="btn btn-danger">Modificar Estacion</button>
+  			<button type="button" class="btn btn-danger">Eliminar Estacion</button>-->
+		</div>
+	</div>	
+		
+		<div class="ListaEstacionesTabla">
+			<table class="table">
+  				<thead class="thead-dark">
+    				<tr>
+			    		<th scope="col">#</th>
+			      		<th scope="col">ID</th>
+			      		<th scope="col">Num.Serie</th>
+			      		<th scope="col">Ver datos Estacion</th>
+			      		<th scope="col"></th>
+			      		<th scope="col"></th>
+    				</tr>
+  				</thead>
+  				<tbody ="elementos-estaciones">
+  				{{#station}}
+    				<tr>	
+				     	<th scope="row">{{-index}}</th>
+				      	<td>{{Id}}</td>
+				      	<td>{{numSerie}}</td>
+				  		<td>
+				  			<a href="#">
+				  				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red" class="bi bi-arrow-up-right-circle" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"/>
+								</svg>
+						</td>
+						<td>
+							<a href="editStation/{{id}}">	
+								<button type="button" class="btn btn-danger">Modificar Estacion</button>
+							</a>
+						</td>
+						<td>
+							<a href="#">
+  								<button type="button" class="btn btn-danger">Eliminar Estacion</button>
+  							</a>
+				  		</td>
+    				</tr>
+    			{{/station}} 
+  				</tbody ="elementos-estaciones">
+			</table>
+		</div>
+		
+	</div>
+{{>footer}}
