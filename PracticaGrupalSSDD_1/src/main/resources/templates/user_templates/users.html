@@ -1,24 +1,66 @@
 {{>header}}
-	<p><h2>Lista de Usuarios</h2></p>
-	<table>
-		<thead>
-			<tr>
-				<th>Identificador</th>
-				<th>Nombre</th>
-				<th>Estado</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#user}}
-			<tr>
-				<td>{{id}}</td>
-				<td>{{name}}</td>
-				<td>{{active}}</td>
-    			<td><a href="/disabled_user" class="btn">
-        		Dar de baja <i class="fas fa-chevron-right"></i>
-    			</a></td>
-			</tr>
-			{{/user}}
-		</tbody>
-	</table>
+	<div="container">
+		<div class="moduloGestion">
+		<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+  			<path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+		</svg>
+		<h1>Gestion Usuarios</h1>
+		
+		</div>
+
+	<div class="botones">
+		<div class="ListaUsuarios">
+			<h3>Listado de Usuarios</h3>
+		</div>
+		
+		<div>
+			<a href="/new_user">
+				<button type="button" class="btn btn-danger">Añadir Usuario</button>
+			</a>		
+		</div>
+	</div>	
+		
+		<div class="ListaUsuarioTabla">
+			<table class="table">
+  				<thead class="thead-dark">
+    				<tr>
+			    		<th scope="col">#</th>
+			      		<th scope="col">ID</th>
+			      		<th scope="col">Nombre</th>
+			      		<th scope="col">Estado</th>
+			      		<th scope="col">Ver datos Usuario</th>
+			      		<th scope="col"></th>
+			      		<th scope="col"></th>
+    				</tr>
+  				</thead>
+  				<tbody ="elementos-usuarios">
+  				{{#user}}
+    				<tr>	
+				     	<th scope="row">{{-index}}</th>
+				      	<td>{{id}}</td>
+				      	<td>{{name}}</td>
+				      	<td>{{active}}</td>
+				  		<td>
+				  			<a href="/show_info/{{id}}">
+				  				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red" class="bi bi-arrow-up-right-circle" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"/>
+								</svg>
+						</td>
+						<td>
+							<a href="/modify_user/{{id}}">	
+								<button type="button" class="btn btn-danger">Modificar Usuario</button>
+							</a>
+						</td>
+						<td>
+							<a href="/disabled_user/{{id}}">
+  								<button type="button" class="btn btn-danger">Dar de Baja Usuario</button>
+  							</a>
+				  		</td>
+    				</tr>
+    			{{/user}} 
+  				</tbody ="elementos-usuarios">
+			</table>
+		</div>
+		
+	</div>
 {{>footer}}

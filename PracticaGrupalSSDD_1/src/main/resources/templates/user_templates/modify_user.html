@@ -2,22 +2,18 @@
 	<p><h2>Modificar usuario</h2></p>
 
 	<article class="articulo">
-		<h3>Introducir datos:</h3>
-		<form class="formulario" action="/modified_user" method="post">
+		<h3>Introducir nuevos datos del usuario con ID: {{id}}</h3>
+		<form class="formulario" action="/modified_user/{{id}}" method="post">
 			
-			<label for="id">ID: (No se puede modificar, introduce el mismo ya existente)</label>
-			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br> 
-			<input type="text" id="id" name="id"><br>
-			
-			<label for="name">Nombre:</label>
+			<label for="name">Nombre actual: {{name}}</label>
 			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br>
 			<input type="text" id="name" name="name"><br>
 			
-			<label for="password">Contrasena:</label>
+			<label for="password">Contraseña actual: {{password}}</label>
 			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br>
 			<input type="text" id="password" name="password"><br>
 			
-			<label for="state">Estado:</label>
+			<label for="state">Estado actual: {{state}}</label>
 			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br>
 			<select name="state" id="state">
   				<option value="active">Activo</option>

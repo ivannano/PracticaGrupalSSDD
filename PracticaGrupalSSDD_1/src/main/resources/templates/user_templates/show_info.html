@@ -1,0 +1,23 @@
+{{>header}}
+	<p><h2>Mostrar Informacion del Usuario</h2></p>
+
+	<div>
+		<hr>
+		ID: {{id}}<br>
+		Nombre: {{name}}<br>
+		Contraseña: {{password}}<br>
+		Fecha de Alta: {{date}}<br>
+		Estado: {{state}}
+		</hr>
+	</div>
+	<br>
+	<a href="/disabled_user/{{id}}">
+  		<button type="button" class="btn btn-danger">Dar de Baja Usuario</button>
+  	</a>
+  	<br><br>
+	<div>
+		<a href="/users">
+			<button type="button" class="btn btn-danger">Volver al Inicio</button>
+		</a>		
+	</div>
+{{>footer}}

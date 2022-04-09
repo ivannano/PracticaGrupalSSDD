@@ -1,5 +1,6 @@
 package es.codeurjc.PracticaGrupalSSDD_1;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,48 +28,57 @@ public class WebController {
 	private StationService stationService;
 
 	private User user;
-	
-	@GetMapping("/user_index")
-	public String users(Model model) {
-		
-		return "user_index";
-	}
+
+// USUARIOS
 	
 	@GetMapping("/users")
 	public String listUsers(Model model) {
 		List<User> listaUsuarios = userRepo.findAll();
 		model.addAttribute("user", listaUsuarios);
-		return "users";
+		return "/user_templates/users";
 	}
 	
 	@GetMapping("/new_user")
 	public String newUser() {
-		return "new_user";
+		return "/user_templates/new_user";
 	}
 	
-	@PostMapping("/processUser")
-	public String processUser(@RequestParam Long id, 
-							@RequestParam String nombre, 
-							@RequestParam String contraseña) {
-		user.setId(id);
-		user.setName(nombre);
-		user.setPassword(contraseña);
+	@PostMapping("/process_user")
+	public String processUser(Model model,
+							@RequestParam Long id, 
+							@RequestParam String name, 
+							@RequestParam String password) {
+		user = new User(id, name, password);
 		userRepo.save(user);
-		return "processUser";
+		model.addAttribute("id", id);
+        model.addAttribute("name", name);
+        model.addAttribute("password", password);
+		return "/user_templates/process_user";
 	}
 	
-	@GetMapping("/modify_user")
-	public String modifyUser() {
-
-		return "modify_user";
+	@GetMapping("/modify_user/{id}")
+	public String modifyUser(Model model,
+							@PathVariable Long id) {
+		
+		Optional<User> user = userRepo.findById(id);
+		String name = user.get().getName();
+		String password = user.get().getPassword();
+		User.Estados state = user.get().getActive();
+		
+		model.addAttribute("id", id);
+		model.addAttribute("name", name);
+		model.addAttribute("password", password);
+		model.addAttribute("state", state);
+		
+		return "/user_templates/modify_user";
 	}
 	
-	@PostMapping("/modified_user")
+	@PostMapping("/modified_user/{id}")
 	public String modifiedUser(Model model,
 								@RequestParam String name,
 								@RequestParam String password,
 								@RequestParam String state,
-								@RequestParam Long id) {
+								@PathVariable Long id) {
 		
 		Optional<User> user = userRepo.findById(id);
 		if(user.isPresent()) {
@@ -94,12 +104,12 @@ public class WebController {
         model.addAttribute("name", name);
         model.addAttribute("password", password);
 		
-        return "modified_user";
+        return "/user_templates/modified_user";
 	}
 	
-	@PostMapping("/disabled_user")
+	@GetMapping("/disabled_user/{id}")
 	public String disabledUser(Model model,
-								@RequestParam Long id) {
+								@PathVariable Long id) {
 		
 		Optional<User> user = userRepo.findById(id);
 		if(user.isPresent()) {
@@ -108,16 +118,39 @@ public class WebController {
 			//Sobreescribimos los datos que haya modificado el usuario
 			userRepo.deleteById(id);
 			userRepo.save(user.get());
+			model.addAttribute("id", id);
+			return "/user_templates/disabled_user";
 		}
 		
 		else {
 			//Notificar que el usuario no existe
 			System.out.println("Usuario no encontrado");
+			return "/user_templates/users";
 		}
-		
-		model.addAttribute("id", id);
-		return "disabled_user";
 	}
+	
+	@GetMapping("/show_info/{id}")
+	public String showInfo(Model model,
+							@PathVariable Long id) {
+		
+		Optional<User> user = userRepo.findById(id);
+		if(user.isPresent()) {
+			String name = user.get().getName();
+			String password = user.get().getPassword();
+			LocalDate date = user.get().getDate();
+			User.Estados state = user.get().getActive();
+			
+			model.addAttribute("id", id);
+			model.addAttribute("name", name);
+			model.addAttribute("password", password);
+			model.addAttribute("date", date);
+			model.addAttribute("state", state);
+		}
+		return "user_templates/show_info";
+	}
+
+	
+// ESTACIONES
 	
 	@GetMapping("/stations")
 	public String listStation(Model model) {
@@ -138,6 +171,5 @@ public class WebController {
 				
 		}
 	}
-	
-	
+		
 }
