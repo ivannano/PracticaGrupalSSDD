@@ -12,7 +12,11 @@ public class User {
 	private String password;
 	private String name;
 	private LocalDate date;
-	private boolean active;
+	private Estados active;
+	
+	public enum Estados {
+		Activo, Inactivo
+	}
 	
 	public User() {
 		
@@ -23,7 +27,7 @@ public class User {
 		this.password = contraseña;
 		this.name = nombre;
 		this.date = LocalDate.now();
-		this.active = true;
+		this.active = Estados.Activo;
 	}
 	
 	public Long getId() {
@@ -42,7 +46,7 @@ public class User {
 		return this.date;
 	}
 	
-	public boolean getActive() {
+	public Estados getActive() {
 		return this.active;
 	}
 	
@@ -58,7 +62,7 @@ public class User {
 		this.password = newPassword;
 	}
 	
-	public void setActive(boolean newActive) {
+	public void setActive(Estados newActive) {
 		this.active = newActive;
 	}
 	
@@ -82,7 +86,7 @@ public class User {
 	@Override
 	public String toString() {
 		String s = "Nombre: " + this.name + ", Identificador: " + this.id + ", Estado: ";
-		if(this.active) {
+		if(this.active.equals("activo")) {
 			s = s + "activo";
 		}
 		else {
