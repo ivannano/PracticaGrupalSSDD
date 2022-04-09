@@ -20,7 +20,7 @@ public class Station {
 	private String fechaInstalacion;
 	private Estado estado;
 	private int capacidad;
-	
+	private static int numEstaciones;
 	private enum Estado{
 		ACTIVO,INACTIVO
 	}
@@ -35,6 +35,10 @@ public class Station {
 		this.numSerie = numSerie;
 		this.fechaInstalacion = dtf.format(LocalDateTime.now());
 		this.estado = Estado.ACTIVO;
+		this.numEstaciones= this.numEstaciones+1;
+	}
+	public int getNumEstaciones() {
+		return this.numEstaciones;
 	}
 	
 	public String getNumSerie() {
@@ -81,9 +85,6 @@ public class Station {
 		return Id;
 	}
 
-
-	
-	
 	@Override
 	public String toString() {
 		return "Estacion [numSerie=" + numSerie + ", coordenadas=" + coordenadas + ", fechaInstalacion="

@@ -1,104 +1,140 @@
-html,body{
-	padding: 0;
-	margin: 0;
-	background-image: url("http://www.solofondos.com/wp-content/uploads/2017/08/207fb729e27a3633c26561a8463233f6.jpg");
-	height: 100%;
-	background-repeat: none;
-	background-size:cover;
-	
-}
-
-
-h2{
-	margin: 0;
-	padding:2em;
-}
-/*
-ID CON #
-CLASS CON .
-*/
-
-/*Estilizacion del NAV*/
-
-
-.div-nav-main{
-	/*background-color:blue;*/
-	padding:1em;
-	overflow:hidden;
-}
-
-.item-nav{
-	margin: 1em;
-	padding: 1em;
-	color:#ffffff;
-	float:left;
-}
-
-
-
-#logo{
-	width: 30%;
-}
-
-#item2{
-	/*background-color:chartreuse;*/
-	transform:translateX(50%) translateY(110%);
-}
-#item2 ul{
-	display:flex;
+*{
 	margin:0;
 	padding:0;
+	box-sizing:border-box;
+}
+
+body{
+	/*Añadir estilo de letra*/
+	padding:90px 20px 0;
+	font-family: Arial, Helvetica, Sans-Serif;
+	
+}
+
+.cabecera{
+	background-color:#CB0017;
+	height: 80px;
+	position:fixed; /*Posicion fija*/
+	width:100%;
+	top:0;
+	left:0;
+}
+
+.nav-sb{
+	display:flex; /*Poner elementos en horizontal*/
+	justify-content: space-between;
+	max-width: 992px; /*En boostrap explican porque este numero*/
+	margin:0 auto;
+}
+
+.logo{
+	font-size: 30px;
+	font-weight: bold;
+	/*padding:0 40px;*/
+
+	line-height: 70px; /*Para que quede centrado se le pone el mismo alto que tenemos en el bloque*/
+	
+}
+
+.nav-menu-sb{
+	display:flex; /*Elementos en posicion horizontal*/
+	margin-right: 40px;
 	list-style: none;
+	text-decoration: none;
+}
+.nav-link-sb {
+  color: white;
+  text-decoration: none;
+}
+.nav-menu-item-sb{
+	font-size:18px;
+	margin: 0 10px;
+	line-height: 80px;
+	list-style: none;
+	text-decoration: none;
+	width: max-content; /*Para que no corte las palabras cuando se haga pequeño*/
 }
 
-#item2 ul li{
-	float:left;
+.nav-menu-link-sb{
+	padding:8px 12px;
+	border-radius: 3px;
+}
+.nav-menu-link-sb:hover{
+	background-color: rgb(73, 73, 73);
+	transition: 0.5s;
+}
+.carrousel{
+	width:1300px;
+	height: 0 0 700px 100px;
+	overflow:hidden;
+}
+#logo-campus{
+margin: -10px 0px 0px -180px;
+}
+
+.barra-roja{
+	background-color:rgb(203, 0, 23);
+	margin:5%;
+}
+.slide {
+	margin-top: 10px;
+	
+}
+.slide img{
+	height:65vh;
+}
+
+/*css de stations*/
+
+.moduloGestion{
+	display:flex;
 	
 }
 
+.table{
+	text-align: center;
+}
+.elementos-estaciones{
+	height:auto;
+}
 
-#item2 ul li a{
+.ListaEstaciones{
+	margin: 0 auto;
+	display:flex;
+	width: max-content;
 	
-	border:0 transparent;
-	text-decoration:none;
-	display:inline-block;
-	padding: 0 2em;
+ }
+.ListaEstacionesTabla{
+	height:500px;
+	width:auto;
+	border: 1px solid #ddd;
+	overflow-y: scroll;
 }
 
-#item2 a:hover{
+.botones{
+	display:flex;
+	justify-content: space-between;
+	margin: 0 auto;
+	width: max-content;
+}
+.btn{
+	margin:0 10px;
 	
-	border-bottom:  solid #fff;
-}	
+}
+/*fin css de stations*/
 
-hr{
-	border: none; 
-	height: 5px; 
-	background-color: rgb(255, 255, 255); 
-	border-radius: 5px;
-	width: 90%;
-	transform: translateY(-600%);
+.footer{
+	margin:20px 0;
+	background-color:#CB0017;
+	display:flex;
+	justify-content: center;
+	text-decoration: none;
+	width:100%;
 }
 
-.showcase{
-	width: 100%;
-	height: 550px;
-  	background: url("https://upload.wikimedia.org/wikipedia/commons/a/a6/URJC_Mostoles_DepartamentalI.jpg") no-repeat center center/cover;
-  	display: flex;
-  	flex-direction: column;
-  	align-items: center;
-  	text-align: center;
-  	justify-content: flex-end;
-  	padding-bottom: 50px;
-  	margin-bottom: 20px;
-  	color: #fff;
+.footer svg{
+	
+	margin: 10px 200px;
+	width:100px;
+	height:100px;
 }
-
-.showcase h2,
-.showcase p {
-  margin-bottom: 10px;
-}
-
-.showcase .btn {
-  margin-top: 20px;
-}
-
