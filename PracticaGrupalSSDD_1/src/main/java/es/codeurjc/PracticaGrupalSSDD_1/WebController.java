@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.Bicycle;
 import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.BicycleRepository;
 import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.BicycleService;
-
+import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.Bicycle.Estado;
 
 import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.Station;
 import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.StationService;
@@ -35,6 +35,7 @@ public class WebController {
 	private BicycleRepository bicycleRepo;
 
 	private User user;
+	private Bicycle bicycle;
 
 // USUARIOS
 	
@@ -185,5 +186,43 @@ public class WebController {
 		List<Bicycle> listaBicicletas = bicycleRepo.findAll();
 		model.addAttribute("bicycle", listaBicicletas);
 		return "/bicycle_templates/bicycles";
+	}
+	
+	@GetMapping("/new_bicycle")
+	public String newBicycle() {
+		return "/bicycle_templates/new_bicycle";
+	}
+	
+	@GetMapping("/disabled_bicycle/{id}")
+	public String disabledBicycle(Model model,
+									@PathVariable Long id) {
+		
+		Optional<Bicycle> bicycle = bicycleRepo.findById(id);
+		if(bicycle.isPresent()) {
+			bicycle.get().setEstado(Estado.BAJA);
+			
+			//Sobreescribimos los datos que haya modificado el usuario
+			bicycleRepo.deleteById(id);
+			bicycleRepo.save(bicycle.get());
+			model.addAttribute("id", id);
+			return "/bicycle_templates/disabled_bicycle";
+		}
+		
+		else {
+			//Notificar que el usuario no existe
+			System.out.println("Bicicleta no encontrada");
+			return "/bicycle_templates/bicycles";
+		}
+	}
+	
+	@PostMapping("/process_bicycle")
+	public String processBicycle(Model model, 
+							@RequestParam String nserie, 
+							@RequestParam String modelo) {
+		bicycle = new Bicycle(nserie, modelo);
+		bicycleRepo.save(bicycle);
+        model.addAttribute("n_serie", nserie);
+        model.addAttribute("modelo", modelo);
+		return "/bicycle_templates/process_bicycle";
 	}
 }

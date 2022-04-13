@@ -19,8 +19,11 @@ public class Bicycle {
 	private LocalDate f_alta;
 	private Estado estado;
 	
-	private enum Estado {SIN_BASE, EN_BASE, RESERVADA, BAJA}
+	public enum Estado {SIN_BASE, EN_BASE, RESERVADA, BAJA}
 	
+	public Bicycle() {
+		
+	}
 	public Bicycle(String ns, String m) {
 		n_serie = ns;
 		modelo = m;
@@ -40,8 +43,12 @@ public class Bicycle {
 	public Estado getEstado() {
 		return this.estado;
 	}
+	public Long getId() {
+		return this.Id;
+	}
+	
 	public void setEstado(Estado e){
-		estado = e;
+		this.estado = e;
 	}
 	
 	@Override
