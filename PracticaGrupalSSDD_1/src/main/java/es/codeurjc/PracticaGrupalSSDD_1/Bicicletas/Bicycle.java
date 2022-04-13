@@ -31,6 +31,15 @@ public class Bicycle {
 	public String getNSerie() {
 		return this.n_serie;
 	}
+	public String getModelo() {
+		return this.modelo;
+	}
+	public LocalDate getDate() {
+		return this.f_alta;
+	}
+	public Estado getEstado() {
+		return this.estado;
+	}
 	public void setEstado(Estado e){
 		estado = e;
 	}

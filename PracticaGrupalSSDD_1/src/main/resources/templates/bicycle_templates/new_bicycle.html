@@ -1,0 +1,16 @@
+{{>header}}
+	<p><h2>Dar de alta una nueva bicicleta</h2></p>
+	
+	<article class="articulo">
+		<form class="formulario" action="process_bicycle" method="post">
+			<label for="n_serie">Numero de serie:</label>
+			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br> 
+			<input type="text" n_serie="n_serie" name="n_serie"><br> 
+		
+			<label for="modelo">Modelo:</label>
+			<abbr title="Obligatorio" aria-label="Obligatorio">*</abbr></label><br> 
+			<input type="text" modelo="modelo" name="modelo"><br> 
+			<input type="submit">
+		</form>
+	</article>
+{{>footer}}

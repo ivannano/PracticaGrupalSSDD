@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.Bicycle;
+import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.BicycleRepository;
+import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.BicycleService;
+
+
 import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.Station;
 import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.StationService;
 import es.codeurjc.PracticaGrupalSSDD_1.Usuarios.User;
@@ -26,6 +31,8 @@ public class WebController {
 	private UserRepository userRepo; 
 	@Autowired
 	private StationService stationService;
+	@Autowired 
+	private BicycleRepository bicycleRepo;
 
 	private User user;
 
@@ -171,5 +178,12 @@ public class WebController {
 				
 		}
 	}
-		
+	
+// BICICLETAS
+	@GetMapping("/bicycles")
+	public String listBicycle(Model model) {
+		List<Bicycle> listaBicicletas = bicycleRepo.findAll();
+		model.addAttribute("bicycle", listaBicicletas);
+		return "/bicycle_templates/bicycles";
+	}
 }
