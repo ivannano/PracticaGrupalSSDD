@@ -1,0 +1,50 @@
+{{>header}}
+	<p><h2>Asignar Estacion a Bicicleta</h2></p>
+
+	<h3>Seleccionar la estacion para la bicicleta con ID: {{id}}</h3>
+	<div class="botones">
+		<div class="ListaEstaciones">
+			<h3>Listado de estaciones</h3>
+		</div>
+		
+		<div>
+  			<!--<button type="button" class="btn btn-danger">Seleccionar Estacion</button>
+  			<button type="button" class="btn btn-danger">Cancelar</button>-->
+		</div>
+	</div>	
+		
+		<div class="ListaEstacionesTabla">
+			<table class="table">
+  				<thead class="thead-dark">
+    				<tr>
+			    		<th scope="col">#</th>
+			      		<th scope="col">ID</th>
+			      		<th scope="col">Num.Serie</th>
+			      		<th scope="col"></th>
+			      		<th scope="col"></th>
+    				</tr>
+  				</thead>
+  				<tbody ="elementos-estaciones">
+  				{{#station}}
+    				<tr>	
+				     	<th scope="row">{{-index}}</th>
+				      	<td>{{Id}}</td>
+				      	<td>{{numSerie}}</td>
+				  		
+						<td>
+							<a href="/asigned_station/{{id}}">	
+								<button type="button" class="btn btn-danger">Seleccionar Estacion</button>
+							</a>
+						</td>
+						<td>
+							<a href="/bicycles">
+  								<button type="button" class="btn btn-danger">Cancelar</button>
+  							</a>
+				  		</td>
+    				</tr>
+    			{{/station}} 
+  				</tbody ="elementos-estaciones">
+			</table>
+		</div>
+	
+{{>footer}}

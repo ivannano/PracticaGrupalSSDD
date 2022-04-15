@@ -1,6 +1,7 @@
 package es.codeurjc.PracticaGrupalSSDD_1.Bicicletas;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ public class Bicycle {
 	private String modelo;
 	private LocalDate f_alta;
 	private Estado estado;
+	private ArrayList<Estado> estados = new ArrayList<Estado>();
 	
 	public enum Estado {SIN_BASE, EN_BASE, RESERVADA, BAJA}
 	
@@ -29,6 +31,7 @@ public class Bicycle {
 		modelo = m;
 		f_alta = LocalDate.now();
 		estado = Estado.SIN_BASE;
+		estados.add(Estado.SIN_BASE);
 	}
 	
 	public String getNSerie() {
@@ -46,10 +49,15 @@ public class Bicycle {
 	public Long getId() {
 		return this.Id;
 	}
+	public ArrayList<Estado> getEstados(){
+		return estados;
+	}
 	
 	public void setEstado(Estado e){
 		this.estado = e;
+		estados.add(e);
 	}
+	
 	
 	@Override
 	public String toString() {

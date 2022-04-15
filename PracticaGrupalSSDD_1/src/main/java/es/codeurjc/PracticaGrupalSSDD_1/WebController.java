@@ -217,12 +217,58 @@ public class WebController {
 	
 	@PostMapping("/process_bicycle")
 	public String processBicycle(Model model, 
-							@RequestParam String nserie, 
+							@RequestParam String n_serie, 
 							@RequestParam String modelo) {
-		bicycle = new Bicycle(nserie, modelo);
+		bicycle = new Bicycle(n_serie, modelo);
 		bicycleRepo.save(bicycle);
-        model.addAttribute("n_serie", nserie);
+        model.addAttribute("n_serie", n_serie);
         model.addAttribute("modelo", modelo);
 		return "/bicycle_templates/process_bicycle";
 	}
+	
+	@GetMapping("/mostrar_info/{id}")
+	public String mostrarInfo(Model model,
+							@PathVariable Long id) {
+		
+		Optional<Bicycle> bicycle = bicycleRepo.findById(id);
+		if(bicycle.isPresent()) {
+			String nserie = bicycle.get().getNSerie();
+			String modelo = bicycle.get().getModelo();
+			LocalDate f_alta = bicycle.get().getDate();
+			Bicycle.Estado state = bicycle.get().getEstado();
+			String estados = "";
+			for(Bicycle.Estado e : bicycle.get().getEstados()) {
+				estados = estados + e + ", ";
+			}
+			
+			model.addAttribute("n_serie", nserie);
+			model.addAttribute("modelo", modelo);
+			model.addAttribute("f_alta", f_alta);
+			model.addAttribute("state", state);
+			model.addAttribute("estados", estados);
+		}
+		return "/bicycle_templates/mostrar_info";
+	}
+	
+	@GetMapping("/asignar_estacion/{id}")
+	public String asignarEstacion(Model model,
+							@PathVariable Long id) {
+		Optional<Bicycle> bicycle = bicycleRepo.findById(id);
+		if (bicycle.get().getEstado() == Bicycle.Estado.SIN_BASE) {
+			List<Station> listaEstaciones = stationService.findAll();
+			model.addAttribute("station", listaEstaciones);
+			bicycle.get().setEstado(Estado.EN_BASE);
+			return "bicycle_templates/asignar_estacion";
+		}
+		else {
+			System.out.println("No se puede asignar una estacio a esta bicicleta");
+			return "/bicycles";
+		}
+	}
+	
+	@GetMapping("/asigned_station/{id}")
+		public String asignedEstacion(Model model,
+								@PathVariable Long id) {
+			return "/bicycle_templates/asigned_station";
+		}
 }
