@@ -13,7 +13,7 @@ public class Bicycle {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long Id = null;
+	private Long id_bicycle = null;
 	
 	private String n_serie;
 	private String modelo;
@@ -47,7 +47,7 @@ public class Bicycle {
 		return this.estado;
 	}
 	public Long getId() {
-		return this.Id;
+		return this.id_bicycle;
 	}
 	public ArrayList<Estado> getEstados(){
 		return estados;
@@ -85,6 +85,6 @@ public class Bicycle {
 		
 		Bicycle b = (Bicycle) o;
 		
-		return (this.getNSerie().equals(b.getNSerie()));
+		return (this.getId().equals(b.getId()));
 	}
 }

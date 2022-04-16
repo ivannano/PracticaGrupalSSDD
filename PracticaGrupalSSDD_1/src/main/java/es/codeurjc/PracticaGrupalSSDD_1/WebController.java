@@ -193,18 +193,18 @@ public class WebController {
 		return "/bicycle_templates/new_bicycle";
 	}
 	
-	@GetMapping("/disabled_bicycle/{id}")
+	@GetMapping("/disabled_bicycle/{id_bicycle}")
 	public String disabledBicycle(Model model,
-									@PathVariable Long id) {
+									@PathVariable Long id_bicycle) {
 		
-		Optional<Bicycle> bicycle = bicycleRepo.findById(id);
+		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		if(bicycle.isPresent()) {
 			bicycle.get().setEstado(Estado.BAJA);
 			
 			//Sobreescribimos los datos que haya modificado el usuario
-			bicycleRepo.deleteById(id);
+			bicycleRepo.deleteById(id_bicycle);
 			bicycleRepo.save(bicycle.get());
-			model.addAttribute("id", id);
+			model.addAttribute("id_bicycle", id_bicycle);
 			return "/bicycle_templates/disabled_bicycle";
 		}
 		
@@ -226,11 +226,11 @@ public class WebController {
 		return "/bicycle_templates/process_bicycle";
 	}
 	
-	@GetMapping("/mostrar_info/{id}")
+	@GetMapping("/mostrar_info/{id_bicycle}")
 	public String mostrarInfo(Model model,
-							@PathVariable Long id) {
+							@PathVariable Long id_bicycle) {
 		
-		Optional<Bicycle> bicycle = bicycleRepo.findById(id);
+		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		if(bicycle.isPresent()) {
 			String nserie = bicycle.get().getNSerie();
 			String modelo = bicycle.get().getModelo();
@@ -250,14 +250,13 @@ public class WebController {
 		return "/bicycle_templates/mostrar_info";
 	}
 	
-	@GetMapping("/asignar_estacion/{id}")
+	@GetMapping("/asignar_estacion/{id_bicycle}")
 	public String asignarEstacion(Model model,
-							@PathVariable Long id) {
-		Optional<Bicycle> bicycle = bicycleRepo.findById(id);
+							@PathVariable Long id_bicycle) {
+		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		if (bicycle.get().getEstado() == Bicycle.Estado.SIN_BASE) {
 			List<Station> listaEstaciones = stationService.findAll();
 			model.addAttribute("station", listaEstaciones);
-			bicycle.get().setEstado(Estado.EN_BASE);
 			return "bicycle_templates/asignar_estacion";
 		}
 		else {
@@ -266,9 +265,17 @@ public class WebController {
 		}
 	}
 	
-	@GetMapping("/asigned_station/{id}")
+	@GetMapping("/asigned_station/{id_bicycle}")
 		public String asignedEstacion(Model model,
-								@PathVariable Long id) {
+								@PathVariable Long id_bicycle) {
+
+		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
+		bicycle.get().setEstado(Estado.EN_BASE);
+		
+		//Sobreescribimos los datos que haya modificado el usuario
+		bicycleRepo.deleteById(id_bicycle);
+		bicycleRepo.save(bicycle.get());
+		model.addAttribute("id_bicycle", id_bicycle);
 			return "/bicycle_templates/asigned_station";
 		}
 }
