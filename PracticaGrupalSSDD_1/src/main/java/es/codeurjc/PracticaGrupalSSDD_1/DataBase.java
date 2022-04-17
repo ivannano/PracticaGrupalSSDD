@@ -30,20 +30,8 @@ public class DataBase {
 	public void init() {
 		// Sample films
 		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("124",12.3,100));
+		stationRepo.save(new Station("300",145.32,100));
+		
 		
 		
 		userRepo.save(new User(123L, "Pepe", "password"));

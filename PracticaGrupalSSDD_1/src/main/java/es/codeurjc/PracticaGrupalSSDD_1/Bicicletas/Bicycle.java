@@ -4,9 +4,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.Station;
 
 @Entity
 public class Bicycle {
@@ -18,8 +24,14 @@ public class Bicycle {
 	private String n_serie;
 	private String modelo;
 	private LocalDate f_alta;
+	
+	@Enumerated(EnumType.STRING)
 	private Estado estado;
+	
 	private ArrayList<Estado> estados = new ArrayList<Estado>();
+	
+	@OneToOne
+	private Station estacionAsig;
 	
 	public enum Estado {SIN_BASE, EN_BASE, RESERVADA, BAJA}
 	
@@ -32,6 +44,7 @@ public class Bicycle {
 		f_alta = LocalDate.now();
 		estado = Estado.SIN_BASE;
 		estados.add(Estado.SIN_BASE);
+		estacionAsig=null;
 	}
 	
 	public String getNSerie() {
@@ -43,6 +56,8 @@ public class Bicycle {
 	public LocalDate getDate() {
 		return this.f_alta;
 	}
+	
+	@Enumerated(EnumType.STRING)
 	public Estado getEstado() {
 		return this.estado;
 	}
@@ -56,6 +71,10 @@ public class Bicycle {
 	public void setEstado(Estado e){
 		this.estado = e;
 		estados.add(e);
+	}
+	
+	public void setEstacion(Station s) {
+		this.estacionAsig = s;
 	}
 	
 	

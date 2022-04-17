@@ -1,0 +1,20 @@
+{{>header}}
+	<form class="formulario" action="/stations" method="post">
+			
+			<label for="name">Numero de Serie:</label>
+			<input type="text" name="numSerie"><br>
+			
+			<label for="name">Coordenadas:</label>
+			<input type="text" name="coords"><br>
+			
+			<label for="name">Capacidad:</label>
+			<input type="text" name="capacidad"><br>
+			
+			<label for="name">Estado:</label>
+			<select name="state" id="state">
+  				<option value="active">Activo</option>
+  				<option value="inactive">Inactivo</option>
+			</select>
+			<input type="submit">
+		</form>
+{{>footer}}

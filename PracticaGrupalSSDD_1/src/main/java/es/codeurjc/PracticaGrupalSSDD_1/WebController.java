@@ -4,9 +4,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +25,7 @@ import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.BicycleService;
 import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.Bicycle.Estado;
 
 import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.Station;
+import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.StationRepository;
 import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.StationService;
 import es.codeurjc.PracticaGrupalSSDD_1.Usuarios.User;
 import es.codeurjc.PracticaGrupalSSDD_1.Usuarios.UserRepository;
@@ -25,18 +33,22 @@ import es.codeurjc.PracticaGrupalSSDD_1.Usuarios.User.Estados;
 
 
 @Controller
+
 public class WebController {
 	
 	@Autowired
 	private UserRepository userRepo; 
 	@Autowired
 	private StationService stationService;
+	@Autowired
+	private StationRepository stationRepo;
 	@Autowired 
 	private BicycleRepository bicycleRepo;
 
 	private User user;
 	private Bicycle bicycle;
-
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	private EntityManager entityManager;
 // USUARIOS
 	
 	@GetMapping("/users")
@@ -158,28 +170,97 @@ public class WebController {
 	}
 
 	
-// ESTACIONES
+	// ESTACIONES
 	
-	@GetMapping("/stations")
-	public String listStation(Model model) {
-		List<Station> listaEstaciones = stationService.findAll();
-		model.addAttribute("station", listaEstaciones);
-		return "stations";
-	}
-	
-	@GetMapping("/editStation/{id}")
-	public String editStation(Model model,@PathVariable long id) {
-		Optional<Station> op = stationService.findOne(id);
-		if(op.isPresent()) {
-			Station station = op.get();
-			model.addAttribute("station",station);
-			return "editStation";
-		}else {
+		@GetMapping("/stations")
+		public String listStation(Model model) {
+			List<Station> listaEstaciones = stationRepo.findAll();
+			model.addAttribute("station", listaEstaciones);
 			return "stations";
-				
 		}
-	}
+		
+		@GetMapping("/editStation/{id}")
+		public String editStation(Model model,@PathVariable long id) {
+			Optional<Station> op = stationService.findOne(id);
+			if(op.isPresent()) {
+				Station station = op.get();
+				model.addAttribute("station",station);
+				return "editStation";
+			}else {
+				return "stations";
+					
+			}
+		}
+		
+		@GetMapping("/new_station")
+		public String newStation() {
+			return "new_station";
+		}
+		
+		
+		@GetMapping("/station/{id}")
+		public String station(Model model,@PathVariable long id) {
+			Optional<Station> op = stationService.findOne(id);
+			if(op.isPresent()) {
+				Station station = op.get();
+				model.addAttribute("station",station);
+				return "station";
+			}else {
+				return "stations";
+					
+			}
+		}
+		
+		@GetMapping("/editedStation/{id}")
+		public String updateStation(Model model ,@PathVariable long id, @RequestParam double coords ) {
+
+			/*Optional<Station> s = stationRepo.findById(id);
+			if(s.isPresent()) {
+				Station stationNueva = s.get();
+				stationRepo.deleteById(id);
+				stationNueva.setId(id);
+				stationNueva.setCoordenadas(coords);
+				stationRepo.save(stationNueva);
+			}*/
+			stationRepo.updateCoordsById(coords, id);
+
+			return "editedStation";
+			
+		}
 	
+		
+		@PostMapping("/stations")
+		public String newStation(Model model, @RequestParam String numSerie, @RequestParam double coords,@RequestParam int capacidad,@RequestParam String state) {
+			
+			Station s = new Station(numSerie,coords, capacidad);
+			if(state.equals("active"))
+				s.setEstadoActivo();
+			else
+				s.setEstadoInactivo();
+			stationRepo.save(s);
+			model.addAttribute("station",s);
+			return "station";
+		}
+		
+		
+		@DeleteMapping("/stations")
+		public String eliminarEstacion (Model model, @RequestParam Long Id) {
+			stationRepo.deleteById(Id);
+			return"stations";
+		}
+		
+		@GetMapping("/bicisEstacion/{id}")
+		public String bicisEstacion(Model model,@PathVariable long id) {
+			Optional<Station> op = stationService.findOne(id);
+			if(op.isPresent()) {
+				List<Bicycle> bicis = op.get().getBicicletas();
+				model.addAttribute("bicicletas",bicis);
+				return "bicis_Estacion";
+			}else {
+				return "stations";
+			}
+		}
+		
 // BICICLETAS
 	@GetMapping("/bicycles")
 	public String listBicycle(Model model) {
@@ -265,17 +346,51 @@ public class WebController {
 		}
 	}
 	
-	@GetMapping("/asigned_station/{id_bicycle}")
-		public String asignedEstacion(Model model,
-								@PathVariable Long id_bicycle) {
-
+	@GetMapping("/asigned_station/{id_bicycle}/{Id}")
+	public String asignedEstacion(Model model, @PathVariable Long id_bicycle,@PathVariable Long Id) {
+		Optional<Station> s = stationRepo.findById(Id);
 		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		bicycle.get().setEstado(Estado.EN_BASE);
+		bicycle.get().setEstacion(s.get());
 		
 		//Sobreescribimos los datos que haya modificado el usuario
 		bicycleRepo.deleteById(id_bicycle);
-		bicycleRepo.save(bicycle.get());
+		Bicycle b = bicycleRepo.save(bicycle.get());  
+		s.get().addBicycle(b);
 		model.addAttribute("id_bicycle", id_bicycle);
-			return "/bicycle_templates/asigned_station";
+		
+		//bicycleRepo.updateEstacionById(station, id_bicycle);
+		//bicycleRepo.updateEstadoById(Estado.EN_BASE, id_bicycle);
+		
+		
+		
+		return "/bicycle_templates/asigned_station";
 		}
-}
+}  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+

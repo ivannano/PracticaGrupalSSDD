@@ -6,7 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.Bicycle;
+
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 public class Station {
@@ -14,13 +19,16 @@ public class Station {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id=null;
-	
 	private String numSerie;
 	private double coordenadas;
 	private String fechaInstalacion;
 	private Estado estado;
 	private int capacidad;
 	private static int numEstaciones;
+	
+	@OneToMany(mappedBy="estacionAsig")
+	private List<Bicycle> bicicletas;
+	
 	private enum Estado{
 		ACTIVO,INACTIVO
 	}
@@ -35,7 +43,6 @@ public class Station {
 		this.numSerie = numSerie;
 		this.fechaInstalacion = dtf.format(LocalDateTime.now());
 		this.estado = Estado.ACTIVO;
-		this.numEstaciones= this.numEstaciones+1;
 	}
 	public int getNumEstaciones() {
 		return this.numEstaciones;
@@ -83,6 +90,16 @@ public class Station {
 
 	public Long getId() {
 		return Id;
+	}
+	public void setId(long id) {
+		this.Id = id; 
+	}
+	
+	public void addBicycle(Bicycle b) {
+		this.bicicletas.add(b);
+	}
+	public List<Bicycle> getBicicletas(){
+		return this.bicicletas;
 	}
 
 	@Override

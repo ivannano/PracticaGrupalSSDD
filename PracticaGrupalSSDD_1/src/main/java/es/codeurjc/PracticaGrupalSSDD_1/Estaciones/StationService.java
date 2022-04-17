@@ -34,4 +34,9 @@ public class StationService {
 	public boolean exist(long id) {
 		return repository.existsById(id);
 	}
+	
+	public void deleteById(long id) {
+		repository.deleteById(id);
+	}
+	
 }
