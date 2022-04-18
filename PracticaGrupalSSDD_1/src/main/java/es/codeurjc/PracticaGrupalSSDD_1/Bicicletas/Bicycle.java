@@ -3,6 +3,7 @@ package es.codeurjc.PracticaGrupalSSDD_1.Bicicletas;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,14 +22,16 @@ public class Bicycle {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_bicycle = null;
 	
+	@Column(length=16, nullable=false)
 	private String n_serie;
 	private String modelo;
 	private LocalDate f_alta;
 	
-	@Enumerated(EnumType.STRING)
+	
 	private Estado estado;
 	
-	private ArrayList<Estado> estados = new ArrayList<Estado>();
+	/*private StringBuilder estados;*/
+	private String estados="";
 	
 	@OneToOne
 	private Station estacionAsig;
@@ -43,7 +46,9 @@ public class Bicycle {
 		modelo = m;
 		f_alta = LocalDate.now();
 		estado = Estado.SIN_BASE;
-		estados.add(Estado.SIN_BASE);
+		//estados = new StringBuilder();
+		//estados.append(Estado.SIN_BASE);
+		estados = estados + Estado.SIN_BASE;
 		estacionAsig=null;
 	}
 	
@@ -64,13 +69,14 @@ public class Bicycle {
 	public Long getId() {
 		return this.id_bicycle;
 	}
-	public ArrayList<Estado> getEstados(){
+
+	public String getEstados(){
 		return estados;
 	}
 	
 	public void setEstado(Estado e){
 		this.estado = e;
-		estados.add(e);
+		estados = estados +", "+e;
 	}
 	
 	public void setEstacion(Station s) {

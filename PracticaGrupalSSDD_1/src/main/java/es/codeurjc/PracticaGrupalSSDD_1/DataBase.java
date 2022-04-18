@@ -29,8 +29,8 @@ public class DataBase {
 	@PostConstruct
 	public void init() {
 		// Sample films
-		stationRepo.save(new Station("124",12.3,100));
-		stationRepo.save(new Station("300",145.32,100));
+		stationRepo.save(new Station("124",12.3,5));
+		stationRepo.save(new Station("300",145.32,10));
 		
 		
 		
@@ -39,6 +39,8 @@ public class DataBase {
 		bycicleRepo.save(new Bicycle("abc123def456aa11", "ROCKRIDER RACE 900 29"));
 		bycicleRepo.save(new Bicycle("abc123def456bb22", "ROCKRIDER RACE 900 29"));
 		bycicleRepo.save(new Bicycle("abc123def456cc33", "ROCKRIDER RACE 900 29"));
+		bycicleRepo.save(new Bicycle("abc123def456aa44", "ROCKRIDER RACE 900 29"));
+		bycicleRepo.save(new Bicycle("abc123def456aa55", "ROCKRIDER RACE 900 29"));
 
 	}
 }

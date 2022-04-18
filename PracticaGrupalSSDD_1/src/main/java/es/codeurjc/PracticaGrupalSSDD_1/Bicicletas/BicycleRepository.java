@@ -12,10 +12,23 @@ import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.Station;
 public interface BicycleRepository extends JpaRepository<Bicycle, Long> {
 	
 	@Modifying
-	@Query(value = "UPDATE BICYCLE SET ESTADO= :estado.EN_BASE WHERE ID_BICYCLE= :id",nativeQuery = true)
-	void updateEstadoById(@Param("estado")Estado e , @Param("id")Long id);
-	/*
+	@Query(value = "UPDATE BICYCLE SET ESTADO= 1  WHERE ID_BICYCLE= :id",nativeQuery = true)
+	void updateEstadoById(@Param("id")Long id);
+	
+	@Modifying
+	@Query(value = "UPDATE BICYCLE SET ESTADOS= :estado WHERE ID_BICYCLE= :id",nativeQuery = true)
+	void updateEstadosById(@Param("estado") String estado, @Param("id")Long id);
+	
 	@Modifying
 	@Query(value = "UPDATE BICYCLE SET ESTACION_ASIG_ID= :s WHERE ID_BICYCLE= :id",nativeQuery = true)
-	void updateEstacionById(@Param("s")Station s , @Param("id")Long id);*/
+	void updateEstacionById(@Param("s")Station s , @Param("id")Long id);
+	
+	@Modifying 
+	@Query(value = "UPDATE BICYCLE SET ESTADO= 3  WHERE ID_BICYCLE= :id",nativeQuery = true)
+	void updateBajaEstadoById(@Param("id") Long id);
+	
+	@Modifying 
+	@Query(value = "UPDATE BICYCLE SET ESTADO= 0  WHERE ID_BICYCLE= :id",nativeQuery = true)
+	void updateBajaEstadoSinBaseById(@Param("id") Long id);
+	
 }

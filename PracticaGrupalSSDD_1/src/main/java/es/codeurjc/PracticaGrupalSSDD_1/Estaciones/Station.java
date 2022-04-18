@@ -29,7 +29,7 @@ public class Station {
 	@OneToMany(mappedBy="estacionAsig")
 	private List<Bicycle> bicicletas;
 	
-	private enum Estado{
+	public enum Estado{
 		ACTIVO,INACTIVO
 	}
 	

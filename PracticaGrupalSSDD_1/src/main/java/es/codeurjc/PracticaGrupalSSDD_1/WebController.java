@@ -168,6 +168,8 @@ public class WebController {
 		}
 		return "user_templates/show_info";
 	}
+	
+	
 
 	
 	// ESTACIONES
@@ -261,6 +263,34 @@ public class WebController {
 			}
 		}
 		
+		
+		@GetMapping("/disableStation/{id}") 
+		public String disableStation(Model model,@PathVariable Long id) {
+			
+			Optional<Station> s = stationRepo.findById(id);
+			if(s.isPresent()) {
+				/*String name = s.get().getName();
+				String password = s.get().getPassword();
+				LocalDate date = s.get().getDate();
+				User.Estados state = s.get().getActive();*/
+				
+				/*model.addAttribute("id", id);
+				model.addAttribute("name", name);
+				model.addAttribute("password", password);
+				model.addAttribute("date", date);
+				model.addAttribute("state", state);*/
+				stationRepo.updateEstadoInactivoById(id);
+				for(Bicycle b: s.get().getBicicletas()) {
+					bicycleRepo.updateBajaEstadoSinBaseById(b.getId());
+				}
+			}
+			
+			return "disableStation";
+		}
+
+		
+		
+		
 // BICICLETAS
 	@GetMapping("/bicycles")
 	public String listBicycle(Model model) {
@@ -275,17 +305,20 @@ public class WebController {
 	}
 	
 	@GetMapping("/disabled_bicycle/{id_bicycle}")
-	public String disabledBicycle(Model model,
-									@PathVariable Long id_bicycle) {
+	public String disabledBicycle(Model model,@PathVariable Long id_bicycle) {
 		
 		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		if(bicycle.isPresent()) {
-			bicycle.get().setEstado(Estado.BAJA);
+			/*bicycle.get().setEstado(Estado.BAJA);
 			
 			//Sobreescribimos los datos que haya modificado el usuario
 			bicycleRepo.deleteById(id_bicycle);
 			bicycleRepo.save(bicycle.get());
-			model.addAttribute("id_bicycle", id_bicycle);
+			model.addAttribute("id_bicycle", id_bicycle);*/
+			bicycle.get().setEstado(Estado.BAJA);
+			
+			bicycleRepo.updateEstadosById(bicycle.get().getEstados(),id_bicycle);
+			bicycleRepo.updateBajaEstadoById(id_bicycle);
 			return "/bicycle_templates/disabled_bicycle";
 		}
 		
@@ -300,16 +333,22 @@ public class WebController {
 	public String processBicycle(Model model, 
 							@RequestParam String n_serie, 
 							@RequestParam String modelo) {
-		bicycle = new Bicycle(n_serie, modelo);
-		bicycleRepo.save(bicycle);
-        model.addAttribute("n_serie", n_serie);
-        model.addAttribute("modelo", modelo);
-		return "/bicycle_templates/process_bicycle";
+		if(n_serie.length()>16) {
+			List<Bicycle> listaBicicletas = bicycleRepo.findAll();
+			model.addAttribute("bicycle", listaBicicletas);
+			return "/bicycle_templates/bicycles";
+		}else {
+			bicycle = new Bicycle(n_serie, modelo);
+			bicycleRepo.save(bicycle);
+			model.addAttribute("n_serie", n_serie);
+			model.addAttribute("modelo", modelo);
+		
+			return "/bicycle_templates/process_bicycle";
+		}
 	}
 	
 	@GetMapping("/mostrar_info/{id_bicycle}")
-	public String mostrarInfo(Model model,
-							@PathVariable Long id_bicycle) {
+	public String mostrarInfo(Model model,@PathVariable Long id_bicycle) {
 		
 		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		if(bicycle.isPresent()) {
@@ -317,23 +356,19 @@ public class WebController {
 			String modelo = bicycle.get().getModelo();
 			LocalDate f_alta = bicycle.get().getDate();
 			Bicycle.Estado state = bicycle.get().getEstado();
-			String estados = "";
-			for(Bicycle.Estado e : bicycle.get().getEstados()) {
-				estados = estados + e + ", ";
-			}
-			
+			 
 			model.addAttribute("n_serie", nserie);
 			model.addAttribute("modelo", modelo);
 			model.addAttribute("f_alta", f_alta);
 			model.addAttribute("state", state);
-			model.addAttribute("estados", estados);
+			model.addAttribute("estados",bicycle.get().getEstados());
 		}
 		return "/bicycle_templates/mostrar_info";
 	}
 	
 	@GetMapping("/asignar_estacion/{id_bicycle}")
 	public String asignarEstacion(Model model,
-							@PathVariable Long id_bicycle) {
+							@PathVariable Long id_bicycle) { 
 		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		if (bicycle.get().getEstado() == Bicycle.Estado.SIN_BASE) {
 			List<Station> listaEstaciones = stationService.findAll();
@@ -341,7 +376,7 @@ public class WebController {
 			return "bicycle_templates/asignar_estacion";
 		}
 		else {
-			System.out.println("No se puede asignar una estacio a esta bicicleta");
+			System.out.println("No se puede asignar una estacion a esta bicicleta");
 			return "/bicycles";
 		}
 	}
@@ -350,24 +385,33 @@ public class WebController {
 	public String asignedEstacion(Model model, @PathVariable Long id_bicycle,@PathVariable Long Id) {
 		Optional<Station> s = stationRepo.findById(Id);
 		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
-		bicycle.get().setEstado(Estado.EN_BASE);
+		/*bicycle.get().setEstado(Estado.EN_BASE);
 		bicycle.get().setEstacion(s.get());
 		
 		//Sobreescribimos los datos que haya modificado el usuario
 		bicycleRepo.deleteById(id_bicycle);
 		Bicycle b = bicycleRepo.save(bicycle.get());  
 		s.get().addBicycle(b);
-		model.addAttribute("id_bicycle", id_bicycle);
+		model.addAttribute("id_bicycle", id_bicycle);*/
+		if(s.get().getEstado() == Station.Estado.ACTIVO && s.get().getBicicletas().size() < s.get().getCapacidad()) {
+			
+			bicycle.get().setEstado(Estado.EN_BASE);
+			
+			bicycleRepo.updateEstacionById(s.get(), id_bicycle);
+			bicycleRepo.updateEstadoById(id_bicycle);
+			bicycleRepo.updateEstadosById(bicycle.get().getEstados(),id_bicycle);
+			return "/bicycle_templates/asigned_station";
+		}else {
+			List<Bicycle> listaBicicletas = bicycleRepo.findAll();
+			model.addAttribute("bicycle", listaBicicletas);
+			return "bicycle_templates/bicycles";
+		}
 		
-		//bicycleRepo.updateEstacionById(station, id_bicycle);
-		//bicycleRepo.updateEstadoById(Estado.EN_BASE, id_bicycle);
 		
 		
-		
-		return "/bicycle_templates/asigned_station";
 		}
 }  
-  
+    
 
 
 
