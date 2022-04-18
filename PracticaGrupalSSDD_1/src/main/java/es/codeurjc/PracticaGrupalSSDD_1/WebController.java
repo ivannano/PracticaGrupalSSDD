@@ -207,14 +207,6 @@ public class WebController {
 		@GetMapping("/editedStation/{id}")
 		public String updateStation(Model model ,@PathVariable long id, @RequestParam double coords ) {
 
-			/*Optional<Station> s = stationRepo.findById(id);
-			if(s.isPresent()) {
-				Station stationNueva = s.get();
-				stationRepo.deleteById(id);
-				stationNueva.setId(id);
-				stationNueva.setCoordenadas(coords);
-				stationRepo.save(stationNueva);
-			}*/
 			stationRepo.updateCoordsById(coords, id);
 
 			return "/station_templates/editedStation";
@@ -260,16 +252,6 @@ public class WebController {
 			
 			Optional<Station> s = stationRepo.findById(id);
 			if(s.isPresent()) {
-				/*String name = s.get().getName();
-				String password = s.get().getPassword();
-				LocalDate date = s.get().getDate();
-				User.Estados state = s.get().getActive();*/
-				
-				/*model.addAttribute("id", id);
-				model.addAttribute("name", name);
-				model.addAttribute("password", password);
-				model.addAttribute("date", date);
-				model.addAttribute("state", state);*/
 				stationRepo.updateEstadoInactivoById(id);
 				for(Bicycle b: s.get().getBicicletas()) {
 					bicycleRepo.updateBajaEstadoSinBaseById(b.getId());
@@ -298,14 +280,7 @@ public class WebController {
 		
 		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
 		if(bicycle.isPresent()) {
-			/*bicycle.get().setEstado(Estado.BAJA);
-			
-			//Sobreescribimos los datos que haya modificado el usuario
-			bicycleRepo.deleteById(id_bicycle);
-			bicycleRepo.save(bicycle.get());
-			model.addAttribute("id_bicycle", id_bicycle);*/
 			bicycle.get().setEstado(Estado.BAJA);
-			
 			bicycleRepo.updateEstadosById(bicycle.get().getEstados(),id_bicycle);
 			bicycleRepo.updateBajaEstadoById(id_bicycle);
 			return "/bicycle_templates/disabled_bicycle";
@@ -374,18 +349,8 @@ public class WebController {
 	public String asignedEstacion(Model model, @PathVariable Long id_bicycle,@PathVariable Long Id) {
 		Optional<Station> s = stationRepo.findById(Id);
 		Optional<Bicycle> bicycle = bicycleRepo.findById(id_bicycle);
-		/*bicycle.get().setEstado(Estado.EN_BASE);
-		bicycle.get().setEstacion(s.get());
-		
-		//Sobreescribimos los datos que haya modificado el usuario
-		bicycleRepo.deleteById(id_bicycle);
-		Bicycle b = bicycleRepo.save(bicycle.get());  
-		s.get().addBicycle(b);
-		model.addAttribute("id_bicycle", id_bicycle);*/
 		if(s.get().getEstado() == Station.Estado.ACTIVO && s.get().getBicicletas().size() < s.get().getCapacidad()) {
-			
 			bicycle.get().setEstado(Estado.EN_BASE);
-			
 			bicycleRepo.updateEstacionById(s.get(), id_bicycle);
 			bicycleRepo.updateEstadoEnBaseById(id_bicycle);
 			bicycleRepo.updateEstadosById(bicycle.get().getEstados(),id_bicycle);

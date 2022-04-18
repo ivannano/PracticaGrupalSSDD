@@ -26,11 +26,7 @@ public class Bicycle {
 	private String n_serie;
 	private String modelo;
 	private LocalDate f_alta;
-	
-	
 	private Estado estado;
-	
-	/*private StringBuilder estados;*/
 	private String estados="";
 	
 	@OneToOne
@@ -46,8 +42,6 @@ public class Bicycle {
 		modelo = m;
 		f_alta = LocalDate.now();
 		estado = Estado.SIN_BASE;
-		//estados = new StringBuilder();
-		//estados.append(Estado.SIN_BASE);
 		estados = estados + Estado.SIN_BASE;
 		estacionAsig=null;
 	}

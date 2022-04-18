@@ -24,7 +24,6 @@ public class Station {
 	private String fechaInstalacion;
 	private Estado estado;
 	private int capacidad;
-	private static int numEstaciones;
 	
 	@OneToMany(mappedBy="estacionAsig")
 	private List<Bicycle> bicicletas;
@@ -43,9 +42,6 @@ public class Station {
 		this.numSerie = numSerie;
 		this.fechaInstalacion = dtf.format(LocalDateTime.now());
 		this.estado = Estado.ACTIVO;
-	}
-	public int getNumEstaciones() {
-		return this.numEstaciones;
 	}
 	
 	public String getNumSerie() {
