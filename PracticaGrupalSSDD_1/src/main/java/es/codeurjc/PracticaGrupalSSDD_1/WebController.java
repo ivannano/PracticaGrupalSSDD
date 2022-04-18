@@ -279,9 +279,7 @@ public class WebController {
 			return "/station_templates/disableStation";
 		}
 
-		
-		
-		
+	
 // BICICLETAS
 	@GetMapping("/bicycles")
 	public String listBicycle(Model model) {
