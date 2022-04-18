@@ -3,12 +3,6 @@ package es.codeurjc.PracticaGrupalSSDD_1;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.Bicycle;
 import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.BicycleRepository;
-import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.BicycleService;
 import es.codeurjc.PracticaGrupalSSDD_1.Bicicletas.Bicycle.Estado;
 
 import es.codeurjc.PracticaGrupalSSDD_1.Estaciones.Station;
@@ -33,7 +26,6 @@ import es.codeurjc.PracticaGrupalSSDD_1.Usuarios.User.Estados;
 
 
 @Controller
-
 public class WebController {
 	
 	@Autowired
@@ -47,8 +39,7 @@ public class WebController {
 
 	private User user;
 	private Bicycle bicycle;
-	@PersistenceContext(type = PersistenceContextType.EXTENDED)
-	private EntityManager entityManager;
+
 // USUARIOS
 	
 	@GetMapping("/users")
@@ -178,7 +169,7 @@ public class WebController {
 		public String listStation(Model model) {
 			List<Station> listaEstaciones = stationRepo.findAll();
 			model.addAttribute("station", listaEstaciones);
-			return "stations";
+			return "/station_templates/stations";
 		}
 		
 		@GetMapping("/editStation/{id}")
@@ -187,16 +178,16 @@ public class WebController {
 			if(op.isPresent()) {
 				Station station = op.get();
 				model.addAttribute("station",station);
-				return "editStation";
+				return "/station_templates/editStation";
 			}else {
-				return "stations";
+				return "/station_templates/stations";
 					
 			}
 		}
 		
 		@GetMapping("/new_station")
 		public String newStation() {
-			return "new_station";
+			return "/station_templates/new_station";
 		}
 		
 		
@@ -206,9 +197,9 @@ public class WebController {
 			if(op.isPresent()) {
 				Station station = op.get();
 				model.addAttribute("station",station);
-				return "station";
+				return "/station_templates/station";
 			}else {
-				return "stations";
+				return "/station_templates/stations";
 					
 			}
 		}
@@ -226,7 +217,7 @@ public class WebController {
 			}*/
 			stationRepo.updateCoordsById(coords, id);
 
-			return "editedStation";
+			return "/station_templates/editedStation";
 			
 		}
 	
@@ -241,14 +232,14 @@ public class WebController {
 				s.setEstadoInactivo();
 			stationRepo.save(s);
 			model.addAttribute("station",s);
-			return "station";
+			return "/station_templates/station";
 		}
 		
 		
 		@DeleteMapping("/stations")
 		public String eliminarEstacion (Model model, @RequestParam Long Id) {
 			stationRepo.deleteById(Id);
-			return"stations";
+			return"/station_templates/stations";
 		}
 		
 		@GetMapping("/bicisEstacion/{id}")
@@ -257,9 +248,9 @@ public class WebController {
 			if(op.isPresent()) {
 				List<Bicycle> bicis = op.get().getBicicletas();
 				model.addAttribute("bicicletas",bicis);
-				return "bicis_Estacion";
+				return "/station_templates/bicis_Estacion";
 			}else {
-				return "stations";
+				return "/station_templates/stations";
 			}
 		}
 		
@@ -285,7 +276,7 @@ public class WebController {
 				}
 			}
 			
-			return "disableStation";
+			return "/station_templates/disableStation";
 		}
 
 		
@@ -377,7 +368,7 @@ public class WebController {
 		}
 		else {
 			System.out.println("No se puede asignar una estacion a esta bicicleta");
-			return "/bicycles";
+			return "/bicycle_templates/bicycles";
 		}
 	}
 	
@@ -398,7 +389,7 @@ public class WebController {
 			bicycle.get().setEstado(Estado.EN_BASE);
 			
 			bicycleRepo.updateEstacionById(s.get(), id_bicycle);
-			bicycleRepo.updateEstadoById(id_bicycle);
+			bicycleRepo.updateEstadoEnBaseById(id_bicycle);
 			bicycleRepo.updateEstadosById(bicycle.get().getEstados(),id_bicycle);
 			return "/bicycle_templates/asigned_station";
 		}else {
