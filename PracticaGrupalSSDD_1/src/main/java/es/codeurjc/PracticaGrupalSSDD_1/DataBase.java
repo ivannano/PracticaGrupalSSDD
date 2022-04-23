@@ -36,8 +36,8 @@ public class DataBase {
 		userRepo.save(new User(104L, "Mario", "password4"));
 		
 		//Estaciones
-		Station s1 = stationRepo.save(new Station("124",12.3,5));
-		Station s2 = stationRepo.save(new Station("300",145.32,10));
+		Station s1 = stationRepo.save(new Station("124","52° 31' 28'' N; 13° 24' 38'' E",5));
+		Station s2 = stationRepo.save(new Station("300","48° 51' 12'' N; 02° 20' 56'' E",10));
 	
 		//Bicicletas
 		Bicycle b1 = bicycleRepo.save(new Bicycle("abc123def456aa11", "ROCKRIDER RACE 900 29"));

@@ -40,6 +40,11 @@ public class WebController {
 	private User user;
 	private Bicycle bicycle;
 
+	@GetMapping("/error")
+	public String error() {
+		return "/error";
+	}
+	
 // USUARIOS
 	
 	@GetMapping("/users")
@@ -136,7 +141,7 @@ public class WebController {
 		else {
 			//Notificar que el usuario no existe
 			System.out.println("Usuario no encontrado");
-			return "/user_templates/users";
+			return "redirect:/error";
 		}
 	}
 	
@@ -180,7 +185,7 @@ public class WebController {
 				model.addAttribute("station",station);
 				return "/station_templates/editStation";
 			}else {
-				return "/station_templates/stations";
+				return "redirect:/error";
 					
 			}
 		}
@@ -199,13 +204,13 @@ public class WebController {
 				model.addAttribute("station",station);
 				return "/station_templates/station";
 			}else {
-				return "/station_templates/stations";
+				return "redirect:/error";
 					
 			}
 		}
 		
 		@GetMapping("/editedStation/{id}")
-		public String updateStation(Model model ,@PathVariable long id, @RequestParam double coords ) {
+		public String updateStation(Model model ,@PathVariable long id, @RequestParam String coords ) {
 
 			stationRepo.updateCoordsById(coords, id);
 
@@ -215,7 +220,7 @@ public class WebController {
 	
 		
 		@PostMapping("/stations")
-		public String newStation(Model model, @RequestParam String numSerie, @RequestParam double coords,@RequestParam int capacidad,@RequestParam String state) {
+		public String newStation(Model model, @RequestParam String numSerie, @RequestParam String coords,@RequestParam int capacidad,@RequestParam String state) {
 			
 			Station s = new Station(numSerie,coords, capacidad);
 			if(state.equals("active"))
@@ -232,7 +237,7 @@ public class WebController {
 		public String eliminarEstacion (Model model, @RequestParam Long Id) {
 			stationRepo.deleteById(Id);
 			return"/station_templates/stations";
-		}
+		} 
 		
 		@GetMapping("/bicisEstacion/{id}")
 		public String bicisEstacion(Model model,@PathVariable long id) {
@@ -240,9 +245,9 @@ public class WebController {
 			if(op.isPresent()) {
 				List<Bicycle> bicis = op.get().getBicicletas();
 				model.addAttribute("bicicletas",bicis);
-				return "/station_templates/bicis_Estacion";
+				return "/station_templates/bicis_estacion";
 			}else {
-				return "/station_templates/stations";
+				return "redirect:/error";
 			}
 		}
 		
@@ -255,7 +260,10 @@ public class WebController {
 				stationRepo.updateEstadoInactivoById(id);
 				for(Bicycle b: s.get().getBicicletas()) {
 					bicycleRepo.updateBajaEstadoSinBaseById(b.getId());
+					bicycleRepo.deleteBicyclesFromStation(b.getId());
+					s.get().NullBicicletas();
 				}
+				
 			}
 			
 			return "/station_templates/disableStation";
@@ -289,7 +297,7 @@ public class WebController {
 		else {
 			//Notificar que el usuario no existe
 			System.out.println("Bicicleta no encontrada");
-			return "/bicycle_templates/bicycles";
+			return "redirect:/error";
 		}
 	}
 	
@@ -300,7 +308,7 @@ public class WebController {
 		if(n_serie.length()>16) {
 			List<Bicycle> listaBicicletas = bicycleRepo.findAll();
 			model.addAttribute("bicycle", listaBicicletas);
-			return "/bicycle_templates/bicycles";
+			return "redirect:/error";
 		}else {
 			bicycle = new Bicycle(n_serie, modelo);
 			bicycleRepo.save(bicycle);
@@ -341,7 +349,7 @@ public class WebController {
 		}
 		else {
 			System.out.println("No se puede asignar una estacion a esta bicicleta");
-			return "/bicycle_templates/bicycles";
+			return "redirect:/error";
 		}
 	}
 	
@@ -358,11 +366,8 @@ public class WebController {
 		}else {
 			List<Bicycle> listaBicicletas = bicycleRepo.findAll();
 			model.addAttribute("bicycle", listaBicicletas);
-			return "bicycle_templates/bicycles";
+			return "redirect:/error";
 		}
-		
-		
-		
 		}
 }  
     

@@ -40,4 +40,8 @@ public interface BicycleRepository extends JpaRepository<Bicycle, Long> {
 	@Query(value = "UPDATE BICYCLE SET ESTADO= 0  WHERE ID_BICYCLE= :id",nativeQuery = true)
 	void updateBajaEstadoSinBaseById(@Param("id") Long id);
 	
+	@Modifying 
+	@Query(value = "UPDATE BICYCLE SET ESTACION_ASIG_ID= NULL WHERE ID_BICYCLE= :id",nativeQuery = true)
+	void deleteBicyclesFromStation(@Param("id") Long id);
+	
 }

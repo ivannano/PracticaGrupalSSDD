@@ -20,7 +20,7 @@ public class Station {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id=null;
 	private String numSerie;
-	private double coordenadas;
+	private String coordenadas;
 	private String fechaInstalacion;
 	private Estado estado;
 	private int capacidad;
@@ -35,7 +35,7 @@ public class Station {
 	public Station () {
 	}
 	
-	public Station(String numSerie, double coordenadas, int capacidad) {
+	public Station(String numSerie, String coordenadas, int capacidad) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		this.capacidad = capacidad;
 		this.coordenadas = coordenadas;
@@ -52,11 +52,11 @@ public class Station {
 		this.numSerie = numSerie;
 	}
 
-	public double getCoordenadas() {
+	public String getCoordenadas() {
 		return coordenadas;
 	}
 
-	public void setCoordenadas(double coordenadas) {
+	public void setCoordenadas(String coordenadas) {
 		this.coordenadas = coordenadas;
 	}
 
@@ -97,6 +97,10 @@ public class Station {
 	public List<Bicycle> getBicicletas(){
 		return this.bicicletas;
 	}
+	public void NullBicicletas(){
+		this.bicicletas = null;
+	}
+
 
 	@Override
 	public String toString() {
